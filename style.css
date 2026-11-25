@@ -1,0 +1,25 @@
+* { box-sizing: border-box; }
+html, body { margin: 0; background: #0b0d12; color: #e8eaf0; font-family: system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif; -webkit-text-size-adjust: 100%; }
+#app { max-width: 640px; margin: 0 auto; padding: calc(18px + env(safe-area-inset-top)) 16px calc(40px + env(safe-area-inset-bottom)); min-height: 100vh; }
+.top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+h1 { font-size: 24px; margin: 0; }
+h2 { font-size: 15px; color: #9aa3b5; margin: 22px 0 8px; font-weight: 600; }
+.dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #555; margin-inline-start: 8px; }
+.dot.ok { background: #4ade80; } .dot.bad { background: #f87171; }
+.sub { color: #9aa3b5; font-size: 14px; margin: 6px 0 12px; }
+.err { color: #f87171; font-size: 14px; }
+form { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+input { font-size: 16px; padding: 12px; border-radius: 10px; border: 1px solid #2a3040; background: #151925; color: #fff; direction: ltr; text-align: left; }
+button { font-size: 16px; padding: 12px; border-radius: 10px; border: 0; background: #3b82f6; color: #fff; min-height: 44px; font-family: inherit; }
+button.ghost { background: transparent; color: #9aa3b5; border: 1px solid #2a3040; font-size: 13px; padding: 6px 12px; min-height: 0; }
+.card { background: #151925; border: 1px solid #232a3b; border-radius: 14px; padding: 14px; margin-bottom: 10px; }
+.row { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.src { color: #7c869a; font-size: 12px; margin: 2px 0 6px; direction: ltr; text-align: right; }
+.msg { font-size: 14px; }
+.bar { height: 8px; background: #232a3b; border-radius: 4px; margin: 10px 0 6px; overflow: hidden; }
+.fill { height: 100%; border-radius: 4px; transition: width .4s; }
+.small { font-size: 12px; color: #9aa3b5; }
+.chip { font-size: 13px; font-weight: 600; }
+a { color: #6ea8fe; font-size: 13px; display: inline-block; margin-top: 6px; }
+.log { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; padding: 8px 0; border-bottom: 1px solid #1c2232; font-size: 13px; }
+.time { color: #6b758a; font-size: 12px; margin-inline-start: auto; }
