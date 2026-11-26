@@ -120,6 +120,34 @@
     }
     app.innerHTML = html;
     document.getElementById('lo').onclick = logout;
+    document.getElementById('sc').onclick = openScreen;
+  }
+
+  var scrT = null, scrBusy = false, scrEl = null;
+  function closeScreen() { clearInterval(scrT); scrT = null; if (scrEl) { scrEl.remove(); scrEl = null; } }
+  function openScreen() {
+    if (scrEl) return;
+    scrEl = document.createElement('div'); scrEl.className = 'scr';
+    scrEl.innerHTML = '<div class="top"><h1>شاشة المتصفح <span id="sl" class="chip"></span></h1><button class="ghost" id="sx">إغلاق</button></div><div class="frame"><img id="si" alt=""><p id="sm" class="sub">بحمّل...</p></div><p class="sub" id="sa"></p>';
+    document.body.appendChild(scrEl);
+    document.getElementById('sx').onclick = closeScreen;
+    var last = '';
+    function tick() {
+      if (scrBusy || document.hidden) return; scrBusy = true;
+      ensureToken().then(function () { return fetch(BASE + '/rest/v1/screen?id=eq.1&select=img,ts,label', { headers: { apikey: KEY, Authorization: 'Bearer ' + sess.access } }); })
+        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+        .then(function (rows) {
+          scrBusy = false; var r = rows[0]; if (!scrEl) return;
+          var age = r && r.img ? Math.round((Date.now() - new Date(r.ts).getTime()) / 1000) : null;
+          var live = age != null && age < 15;
+          var sl = document.getElementById('sl'); sl.textContent = live ? 'مباشر' : 'متوقف'; sl.style.color = live ? '#4ade80' : '#fb923c';
+          if (!r || !r.img) { document.getElementById('sm').textContent = 'مفيش صورة لسه.'; return; }
+          document.getElementById('sm').style.display = 'none';
+          if (r.img !== last) { last = r.img; document.getElementById('si').src = 'data:image/jpeg;base64,' + r.img; }
+          document.getElementById('sa').textContent = (r.label ? r.label + ' · ' : '') + (live ? 'آخر صورة من ' + age + ' ثانية' : 'مفيش شغل دلوقتي، آخر صورة من ' + ago(r.ts).replace('من ', ''));
+        }).catch(function () { scrBusy = false; var m = document.getElementById('sm'); if (m && !last) m.textContent = 'مشكلة في الاتصال أو الجدول لسه متعملش.'; });
+    }
+    tick(); scrT = setInterval(tick, 1000);
   }
 
   sess = load();
